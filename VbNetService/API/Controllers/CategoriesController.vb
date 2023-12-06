@@ -30,7 +30,26 @@ Namespace Controllers
             Return response
         End Function
 
+        <HttpPost>
+        <Route("api/Categories")>
+        Public Async Function AddUser(<FromBody> dto As CategoryDto.PostDto) As Task(Of ApiResponse(Of CategoryDto.GetDto))
+            Dim response = Await _categoryBs.Add(dto, 0)
+            Return response
+        End Function
 
+        <HttpDelete>
+        <Route("api/Categories/{id}")>
+        Public Async Function DeleteUser(ByVal id As Long) As Task(Of ApiResponse(Of NoData))
+            Dim response = Await _categoryBs.Delete(id, 0)
+            Return response
+        End Function
+
+        <HttpPut>
+        <Route("api/Categories")>
+        Public Async Function UpdateUser(<FromBody> dto As CategoryDto.PutDto) As Task(Of ApiResponse(Of NoData))
+            Dim response = Await _categoryBs.Update(dto, 0)
+            Return response
+        End Function
 
     End Class
 End Namespace
