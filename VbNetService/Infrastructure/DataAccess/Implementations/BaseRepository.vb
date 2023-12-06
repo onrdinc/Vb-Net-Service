@@ -34,7 +34,7 @@ Public Class BaseRepository(Of TEntity As {BaseEntity(Of TId)}, TId, TContext As
         End Using
     End Function
 
-    Public Async Function GetAsync(ByVal predicate As Expression(Of Func(Of TEntity, Boolean)), Optional ByVal includeList() As String = Nothing) As Task(Of TEntity) Implements IBaseRepository(Of TEntity, TId).GetAsync
+    Public Async Function GetAsync(ByVal predicate As Expression(Of Func(Of TEntity, Boolean)), Optional ByVal includeList As List(Of String) = Nothing) As Task(Of TEntity) Implements IBaseRepository(Of TEntity, TId).GetAsync
         Using ctx As New TContext()
             Dim dbSet = ctx.Set(Of TEntity)()
 
@@ -88,16 +88,20 @@ Public Class BaseRepository(Of TEntity As {BaseEntity(Of TId)}, TId, TContext As
     End Function
 
 
-    Public Async Function GetByIdAsync(ByVal id As TId, Optional includeList As List(Of String) = Nothing) As Task(Of TEntity) Implements IBaseRepository(Of TEntity, TId).GetByIdAsync
-        Using ctx As New TContext()
-            Dim query = ctx.Set(Of TEntity)()
+    'Public Async Function GetByIdAsync(ByVal id As TId, Optional includeList As List(Of String) = Nothing) As Task(Of TEntity) Implements IBaseRepository(Of TEntity, TId).GetByIdAsync
+    '    Using ctx As New TContext()
+    '        Dim query = ctx.Set(Of TEntity)()
 
-            For Each include As String In includeList
-                query = query.Include(include)
-            Next
+    '        If includeList IsNot Nothing Then
+    '            For Each include As String In includeList
+    '                query = query.Include(include)
+    '            Next
+    '        End If
 
-            Return Await query.FirstOrDefaultAsync(Function(e) e.Id.Equals(id))
-        End Using
-    End Function
+    '        Return Await query.FirstOrDefaultAsync(Function(e) e.Id.Equals(id))
+    '    End Using
+    'End Function
+
+
 End Class
 

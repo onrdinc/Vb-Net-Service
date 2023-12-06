@@ -23,6 +23,13 @@ Namespace Controllers
         End Function
 
 
+        <HttpGet>
+        <Route("api/Categories/{id}")>
+        Public Async Function GetCategoryById(ByVal id As Integer) As Task(Of ApiResponse(Of CategoryDto.GetDto))
+            Dim response = Await _categoryBs.GetData(id, 0)
+            Return response
+        End Function
+
 
 
     End Class
